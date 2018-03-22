@@ -9,6 +9,7 @@ struct aeroflot{
     int number;
     char brand[10];
 };
+//ghfhfhfhf//
 
 typedef struct aeroflot aeroflot;
 
@@ -25,12 +26,12 @@ int main(){
 	int i=0, num;
 	file = fopen("korolev_12_input.txt", "r");
 	fscanf(file, "%d", &num);
-	
+
 	aeroflot *array = (aeroflot*) malloc ((num) * sizeof(aeroflot));
 	while (fscanf (file, "%s%d%s", array[i].destination, &(array[i].number), array[i].brand) != EOF) {
 		i++;
 	}
-	
+
 	sort(array, num, bitfile, newfile);
 	fclose(file);
 	free(array);
@@ -41,8 +42,8 @@ int main(){
 	free(array);
 	punkt4(array);
 	free(array);
-	
-	
+
+
 }
 /******************************************************************************************/
 void sort(aeroflot *array, int num, FILE* bitfile, FILE* newfile){
@@ -63,21 +64,21 @@ void sort(aeroflot *array, int num, FILE* bitfile, FILE* newfile){
             }
         }
     }
-	
+
 	for(i=0; i<num+1; i++){
         printf("%s\t\t%d\t\t%s\n", ((*(array+i)).destination), ((*(array+i)).number), ((*(array+i)).brand));
     }
-	
+
 	newfile = fopen("korolev_12_output.txt", "w+");
 	fprintf(newfile, "NEW FILE, CREATED FROM BINARY\n\n");
 	for(i=0; i<num+1; i++){
         fprintf(newfile, "%s %d %s\n", (*(array+i)).destination, (*(array+i)).number, (*(array+i)).brand);
     }
 	fclose(newfile);
-	
-	
+
+
 	num++;
-	
+
 	bitfile = fopen("korolev_12_bit.txt", "wb");    /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 	i=0;
 	fwrite(&num, sizeof(int), 1, bitfile);
@@ -97,7 +98,7 @@ void name (FILE* bitfile, aeroflot *array, FILE* newfile){
 		i++;
 	}
 	fclose(bitfile);
-	
+
 	newfile = fopen("korolev_12_output.txt", "a");
 	printf("Enter destination\n");
     char namedestination[20];
@@ -108,7 +109,7 @@ void name (FILE* bitfile, aeroflot *array, FILE* newfile){
             printf("%d\t%s\n", ((*(array+i)).number), ((*(array+i)).brand));
 			fprintf(newfile, "%d %s\n", (*(array+i)).number, (*(array+i)).brand);
             g++;
-        } 
+        }
 
     }
     if (g==0) {
@@ -121,13 +122,13 @@ void name (FILE* bitfile, aeroflot *array, FILE* newfile){
 /**********************************************************************************************************/
 void punkt3(aeroflot *array){
 	int num, nbr, i=0;
-   
+
 	FILE *bitfile = fopen("korolev_12_bit.txt", "rb");
-	
+
 	fread(&num, sizeof(int), 1, bitfile);
 	printf("\nInput number column - ");
 	scanf("%d", &nbr);
-	
+
 	if (nbr == 1){
 		while(i<num){
 			fread(&array[i].destination, sizeof(char[20]), 1, bitfile);
@@ -137,7 +138,7 @@ void punkt3(aeroflot *array){
 		for (i=0; i<num; i++){
 			printf("%s\n", array[i].destination);
 		}
-				
+
 	} if (nbr == 2){
 		fseek(bitfile, sizeof(char[20]) + sizeof(int), SEEK_SET);
 		while(i<num){
@@ -147,8 +148,8 @@ void punkt3(aeroflot *array){
 		}
 		for (i=0; i<num; i++){
 			printf("%d\n", array[i].number);
-		}	
-		
+		}
+
 	} if (nbr == 3){
 		fseek(bitfile, sizeof(char[20]) + sizeof(int[2]), SEEK_SET);
 		while(i<num){
@@ -158,10 +159,10 @@ void punkt3(aeroflot *array){
 		}
 		for (i=0; i<num; i++){
 			printf("%s\n", array[i].brand);
-		}		
-		
+		}
+
 	} if (nbr!=1 && nbr!=2 && nbr!=3) printf ("Error_punkt_3");
-	
+
 	fclose(bitfile);
 }
 
@@ -170,7 +171,7 @@ void punkt3(aeroflot *array){
 void punkt4(aeroflot *array){
 	int num, nbr, i=0;
 	FILE *bitfile = fopen("korolev_12_bit.txt", "rb");
-	
+
 	fread(&num, sizeof(int), 1, bitfile);
 	printf("\nInput number line - ");
 	scanf("%d", &nbr);
@@ -181,9 +182,9 @@ void punkt4(aeroflot *array){
 		//fread(&array[0].brand, (long)sizeof(char[10]), 1, bitfile);
 		printf("%s\t\t%d\t\t%s\n", ((*(array)).destination),((*(array)).number), ((*(array)).brand));
 		exit(1);
-		
+
 	} else printf("Error_punkt_4");
-	
+
 	fclose(bitfile);
 }
 
