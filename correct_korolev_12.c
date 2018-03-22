@@ -9,7 +9,7 @@ struct aeroflot{
     int number;
     char brand[10];
 };
-////
+//123//
 
 typedef struct aeroflot aeroflot;
 
